@@ -3,15 +3,16 @@
 	<head>
 		<title>Google Authenticator QRCode Generator</title>
 		<style type="text/css">
-			input, button, img { display: block; margin: 1em; }
+			input, button, #qrcode { display: block; margin: 1em; }
 		</style>
 	</head>
 	<body>
 		<input id="description" placeholder="description" />
 		<input id="secret" placeholder="secret" />
 		<button onclick="update()">update</button>
-		<img id="qrcode" src=""/>
+		<canvas id="qrcode"></canvas>
 
+		<script src="./qr.min.js"></script>
 		<script>
 			location.hash
 				.substring(1)
@@ -25,10 +26,11 @@
 			function update () {
 				var description = document.getElementById('description').value;
 				var secret = base32enc(document.getElementById('secret').value);
-				var qrcode = document.getElementById('qrcode');
-			
-				qrcode.src = 'https://chart.googleapis.com/chart?chs=200x200&chld=L|0&cht=qr&chl=otpauth://totp/'
-					+ encodeURIComponent(description) + '?secret=' + secret;
+				qr.canvas({
+					canvas: document.getElementById('qrcode'),
+					value: 'otpauth://totp/' + encodeURIComponent(description) + '?secret=' + secret,
+					size: 10
+				});
 			}
 
 			function base32enc (s) {
