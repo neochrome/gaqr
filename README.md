@@ -11,3 +11,6 @@ Use a complete url with description and secret provided as part of the anchor:
 ```
 https://neochrome.github.io/gaqr/#description=some%20text&secret=my%20secret
 ```
+
+If the secret already is base32 encoded, use the parameter `secret32` instead
+of `secret`.

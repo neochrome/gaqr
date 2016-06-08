@@ -9,6 +9,7 @@
 	<body>
 		<input id="description" placeholder="description" />
 		<input id="secret" placeholder="secret" />
+		<input id="secret32" placeholder="secret32" />
 		<button onclick="update()">update</button>
 		<canvas id="qrcode"></canvas>
 
@@ -26,6 +27,8 @@
 			function update () {
 				var description = document.getElementById('description').value;
 				var secret = base32enc(document.getElementById('secret').value);
+				var secret32 = document.getElementById('secret32').value;
+				if (secret32 !== '') { secret = secret32; }
 				qr.canvas({
 					canvas: document.getElementById('qrcode'),
 					value: 'otpauth://totp/' + encodeURIComponent(description) + '?secret=' + secret,
